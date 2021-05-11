@@ -23,21 +23,13 @@ int main(){
     times.push_back(3000);
     times.push_back(4000);
     //List of new processes
-    Process p1 (generateRandomPID(), 1000, 1);
-    rq.insertToReadyQueue(p1);
-    p1.startStartToFinishTimer();
-    Process p2 (generateRandomPID(), 2000, 1);
-    rq.insertToReadyQueue(p2);
-    p2.startStartToFinishTimer();
-    Process p3 (generateRandomPID(), 3000, 1);
-    rq.insertToReadyQueue(p3);
-    p3.startStartToFinishTimer();
-    Process p4 (generateRandomPID(), 7000, 1);
-    rq.insertToReadyQueue(p4);
-    p4.startStartToFinishTimer();
-    Process p5 (generateRandomPID(), 1000, 1);
-    rq.insertToReadyQueue(p5);
-    p5.startStartToFinishTimer();
+    int count = 1;
+    while(count < 10){
+        count++;
+        Process p(generateRandomPID(), times[rand() % 4], 1);
+        p.startStartToFinishTimer();
+        rq.insertToReadyQueue(p);
+    }
 
     while(true){
         Timer t;
@@ -50,11 +42,11 @@ int main(){
 
         if(shouldReturnToReadyQueue()){
             process.setState(1);
-            int newCPUTimeIndex = rand() % 4;
-            while(newCPUTimeIndex != 4){
-                newCPUTimeIndex = rand() % 4;
+            int time = rand() % 4;
+            while(time == 4){
+                time = rand() % 4;
             }
-            process.setCPUTime(rand() % 4);
+            process.setCPUTime(times[rand() % 4]);
             rq.insertToReadyQueue(process);
         }else{
             process.setState(3);
@@ -62,5 +54,5 @@ int main(){
         process.stopStartToFinishTimer();
         process.printProcessInformation();
     }
-
+    return 0;
 }

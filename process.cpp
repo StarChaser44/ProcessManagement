@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <string>
 
-unsigned int pid;
 
 Process::State state;
 
+int pid;
 Timer startToFinishTimer;
 Timer processingTimer;
 double cpuTime = 0;
@@ -49,7 +49,7 @@ void Process::setState(int new_process_state){
     }
 }
 
-void Process::setRandomPID(int id){
+void Process::setRandomPID(){
     pid = rand() % 1000 + 1;
 }
 

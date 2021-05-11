@@ -1,7 +1,9 @@
 #include "ReadyQueue.hpp"
 
 Process ReadyQueue::schedule(void){
-    return ReadyQueue::rq.front();
+    Process p = ReadyQueue::rq.front();
+    ReadyQueue::rq.pop();
+    return p;
 }
 
 void ReadyQueue::insertToReadyQueue(Process p){
