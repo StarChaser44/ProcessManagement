@@ -7,3 +7,7 @@ Process ReadyQueue::schedule(void){
 void ReadyQueue::insertToReadyQueue(Process p){
     rq.push(p);
 }
+
+int ReadyQueue::getQueueSize(void){
+    return ReadyQueue::rq.size();
+}

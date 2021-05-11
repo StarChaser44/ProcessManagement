@@ -10,11 +10,12 @@ Process::State state;
 
 Timer startToFinishTimer;
 Timer processingTimer;
-unsigned int cpuTime;
+double cpuTime = 0;
+double timeSpentFromRQToTerm = 0;
 
 Process::Process(){}
 
-Process::Process(int id, int currentState){
+Process::Process(int id, double seconds, int currentState){
     pid = id;
     switch(currentState){
         case 1:
@@ -29,6 +30,7 @@ Process::Process(int id, int currentState){
         default:
             std::cerr << "Invalid state" << std::endl;
     }
+    cpuTime = seconds;
 }
 
 void Process::setState(int new_process_state){
@@ -47,8 +49,8 @@ void Process::setState(int new_process_state){
     }
 }
 
-void Process::setPID(int id){
-    pid = id;
+void Process::setRandomPID(int id){
+    pid = rand() % 1000 + 1;
 }
 
 Process::State Process::getState(void){
@@ -59,11 +61,16 @@ int Process::getPID(void){
     return pid;
 }
 
+double Process::getCPUTime(void){
+    return cpuTime;
+}
+
 void Process::startStartToFinishTimer(void){
     startToFinishTimer.start();
 }
 
 void Process::stopStartToFinishTimer(void){
+    timeSpentFromRQToTerm = startToFinishTimer.elapsedMilliseconds();
     startToFinishTimer.stop();
 }
 
@@ -75,8 +82,8 @@ void Process::stopProcessingTimer(void){
     processingTimer.stop();
 }
 
-void Process::setCPUTime(void){
-    cpuTime = rand() % 10; 
+void Process::setCPUTime(double seconds){
+    cpuTime = seconds; 
 }
 
 void Process::printProcessInformation(void){
@@ -88,5 +95,5 @@ void Process::printProcessInformation(void){
     }else if(state == Process::terminated_process){
         currentState = "Terminated";
     }
-    std::cout << "[PID: " << pid << ", CPU Time: " << cpuTime << " State: " << currentState << "]" << std::endl;
+    std::cout << "[PID: " << pid << ", CPU Time: " << cpuTime << ", State: " << currentState << ", Time spent from creation to exiting CPU: " << timeSpentFromRQToTerm << "]"<< std::endl;
 }

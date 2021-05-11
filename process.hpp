@@ -1,3 +1,4 @@
+
 class Process 
 {
     public:
@@ -7,16 +8,18 @@ class Process
         running_process,
         terminated_process
         };
+    
         Process();
-        Process(int id, int currentState);
+        Process(int id, double seconds, int currentState);
         void setState(int newProcessState);
-        void setPID(int id);
+        void setRandomPID(int id);
         State getState(void);
         int getPID(void);
+        double getCPUTime(void);
         void printProcessInformation(void);
         void startStartToFinishTimer(void);
         void stopStartToFinishTimer(void);
         void startProcessingTimer(void);
         void stopProcessingTimer(void);
-        void setCPUTime(void);
+        void setCPUTime(double seconds);
 };
